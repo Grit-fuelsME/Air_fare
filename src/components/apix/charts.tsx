@@ -38,7 +38,7 @@ export function IndexChart({ history }: { history: DailyIndexDoc[] }) {
     >
       <div className="h-[300px] w-full sm:h-[340px]">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
+          <LineChart data={data} margin={{ top: 8, right: 8, left: 4, bottom: 0 }}>
             <CartesianGrid stroke="var(--color-grid)" strokeDasharray="3 3" vertical={false} />
             <XAxis
               dataKey="date"
@@ -52,9 +52,14 @@ export function IndexChart({ history }: { history: DailyIndexDoc[] }) {
               tick={axis}
               tickLine={false}
               axisLine={false}
-              domain={["dataMin - 2", "dataMax + 2"]}
+              domain={[
+                (min: number) => Math.floor(min - 2),
+                (max: number) => Math.ceil(max + 2),
+              ]}
+              allowDecimals={false}
               width={50}
             />
+
             <Tooltip
               cursor={{ stroke: "var(--color-muted-foreground)", strokeDasharray: "3 3" }}
               content={({ active, payload }) => {
